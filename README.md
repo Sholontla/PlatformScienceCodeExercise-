@@ -9,12 +9,14 @@
 <h3 align="center">Platform Science Code Exercise</h3>
 
   <p align="center">
-  Run the project:
-    1. Download the repository
-    2. In the root directory in your local filesystem where the project been downloaded, run the Makefile command "make" to build the project and run the docker contaners.
-    3. Use any http client:
-      . POST method:
-        - http://localhost:1001/service/run/process/5/second
+<br />
+<br />
+
+  </p>
+</div>
+
+Run the project: 1. Download the repository 2. In the root directory in your local filesystem where the project been downloaded, run the Makefile command "make" to build the project and run the docker contaners. 3. Use any http client:
+. POST method: - http://localhost:1001/service/run/process/5/second
 
                 - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need for the tests.
 
@@ -30,12 +32,6 @@ This Structure Demo is use for testing and demostration go to for running instru
 diagram 1. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(3).jpeg
 
 diagram 2. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(4).jpeg
-
-<br />
-<br />
-
-  </p>
-</div>
 
 <!-- ABOUT THE PROJECT -->
 
