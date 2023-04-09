@@ -44,6 +44,8 @@ diagram 2. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master
 
 Project structure by:
 
+## File Server Service (file_server/):
+
 ### Built With
 
 - Golang (Go)
@@ -60,10 +62,6 @@ O/I
 - Windows(WSL2)
 - Linux
 
-### Project Overview
-
-- File Server Service (file_server/):
-
   PORT: ws/1001
 
   Project OverView:
@@ -71,8 +69,23 @@ O/I
   . Send the data if needed to throw websocket client and use fleet_service to process some logic business.
   .
 
-- Fleet Service (fleet_service/):
+## Fleet Service (fleet_service/):
 
+### Built With
+
+- Golang (Go)
+- Fiber (http framework)
+- gorilla/websocket (sockets)
+
+Virtualization / Containers
+
+- Docker
+- Docker - Compose
+
+O/I
+
+- Windows(WSL2)
+- Linux
   PORT: ws/2001
 
   Project OverView:
@@ -82,7 +95,7 @@ O/I
 
 <br />
 
-- Analytics Service (analytics/):
+## Analytics Service (analytics/):
 
 ### Built With
 
