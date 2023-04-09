@@ -80,7 +80,20 @@ O/I
   . The service have one websocket server that handle the incoming data from the client "file_server".
   . Then, process the data and apply the logic mention before, and sends the data through the websocket client to the analytics service that render the data into html / bootstrap frontEnd.
 
+<br />
+
 - Analytics Service (analytics/):
+
+### Built With
+
+- Python
+- FastAPI (http framework)
+- websockets (sockets)
+
+Virtualization / Containers
+
+- Docker
+- Docker - Compose
 
   PORT: 1000
 
