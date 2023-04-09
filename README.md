@@ -36,6 +36,8 @@ diagram 1. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master
 
 diagram 2. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(4).jpeg
 
+<br />
+
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
@@ -98,11 +100,15 @@ many improvments need it.
 
 And thanks to the team many other improvements can be implemente.
 
+<br />
+
 ## License
 
 For testing and demostrations purposes.
 
 <!-- CONTACT -->
+
+<br />
 
 ## Contact
 
