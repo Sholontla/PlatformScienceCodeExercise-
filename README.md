@@ -9,17 +9,37 @@
 <h3 align="center">Platform Science Code Exercise</h3>
 
   <p align="center">
-   This Structure Demo is use for testing and demostration go to for running instructions: https://github.com/Sholontla/admin-store-manager/blob/main/arch-high-level-overview.pdf
-    <br />
-    <br />
+  Run the project:
+    1. Download the repository
+    2. In the root directory in your local filesystem where the project been downloaded, run the Makefile command "make" to build the project and run the docker contaners.
+    3. Use any http client:
+      . POST method:
+        - http://localhost:1001/service/run/process/5/second
+
+                - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need for the tests.
+
+    4. go to:
+        localhost:1000
+        And see the data result from the process in the forntEnd.
+
+    5. go to:
+        localhost:1000/profile
+        Dev Profile.
+
+This Structure Demo is use for testing and demostration go to for running instructions:
+diagram 1. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(3).jpeg
+
+diagram 2. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(4).jpeg
+
+<br />
+<br />
+
   </p>
 </div>
 
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-  <p align="right">(<a href="#top">back to top</a>)</p>
 
 Project structure by:
 
@@ -39,7 +59,11 @@ O/I
 - Windows(WSL2)
 - Linux
 
+### Project Overview
+
 - File Server Service (file_server/):
+
+  PORT: ws/1001
 
   Project OverView:
   . This service is used to created and store the dummy creation and files.
@@ -48,12 +72,16 @@ O/I
 
 - Fleet Service (fleet_service/):
 
+  PORT: ws/2001
+
   Project OverView:
   . This service manage the "logic Platform Science Code Exercise" described in the "SDE Code Exercise".
   . The service have one websocket server that handle the incoming data from the client "file_server".
   . Then, process the data and apply the logic mention before, and sends the data through the websocket client to the analytics service that render the data into html / bootstrap frontEnd.
 
 - Analytics Service (analytics/):
+
+  PORT: 1000
 
   Project OverView:
   . This service manage the front end analytics service rendered the data coming from the the "file_server" and "fleet_service"
@@ -80,3 +108,5 @@ For testing and demostrations purposes.
 ## Contact
 
 Gerardo Ruiz Bustani - solbustani@gmail.com - 442 488 6193
+
+<p align="right">(<a href="#top">back to top</a>)</p>
