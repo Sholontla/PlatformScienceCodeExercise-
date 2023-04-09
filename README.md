@@ -1,17 +1,12 @@
 <div id="top"></div>
 
-<!-- Structure Demo Spring -->
-<br />
+<!-- Structure Demo  -->
 <div align="center">
   <a href="https://github.com/Sholontla/Platform-Science-Code-Exercise-">
   </a>
-
 <h3 align="center">Platform Science Code Exercise</h3>
-
   <p align="center">
 <br />
-<br />
-
   </p>
 </div>
 
