@@ -1,0 +1,6 @@
+go 1.19
+
+use (
+	./file_server
+	./fleet_service
+)

@@ -1,0 +1,14 @@
+{
+    "server": 
+        {
+            "ws_server": "ws",
+            "host": "localhost",
+            "port": "2001",
+            "path": "ws"
+        },
+
+    "analytic_server": 
+        {
+            "analytic_server": "analytic_service:1000"
+        }        
+}

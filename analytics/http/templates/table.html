@@ -1,0 +1,39 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Driver</th>
+        <th scope="col">Address</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="fleet-data-placeholder">
+    </tbody>
+  </table>
+  
+  <script>
+  // Function to generate table rows
+  function generateTableRows(fleetData) {
+    let html = '';
+    fleetData.forEach((fleet, index) => {
+      html += `
+        <tr>
+          <th scope="row"><a href="#">${fleet.id}</a></th>
+          <td>${fleet.driver}</td>
+          <td><a href="#" class="text-primary">${fleet.address}</a></td> 
+          <td><span class="badge bg-${fleet.status === 'Approved' ? 'success' : fleet.status === 'Pending' ? 'warning' : 'danger'}">${fleet.status}</span></td>
+        </tr>
+      `;
+    });
+    return html;
+  }
+  
+  // Retrieve sales data from FastAPI endpoint and insert into the table
+  fetch('/drivers')
+    .then(response => response.json())
+    .then(data => {
+      const salesData = data.fleet_data;
+      const tableRows = generateTableRows(salesData);
+      document.getElementById('fleet-data-placeholder').innerHTML = tableRows;
+    });
+  </script>

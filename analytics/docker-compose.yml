@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+
+  analytic_service:
+    restart: always
+    container_name: analytic_service_backend
+    build: .
+    ports:
+      - 1000:1000
+    volumes:
+      - .:/app
+    depends_on:
+      - cache_service
+    networks: 
+      - platform_science_code_exercise
+    
+
+
+  cache_service:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - ./redis/volumes:/data
+    networks: 
+      - platform_science_code_exercise
+    
+
+volumes:
+  cache:
+    driver: local
+    
+
+networks:
+  platform_science_code_exercise:
+    name: net_platform_science_code_exercise
