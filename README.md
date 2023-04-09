@@ -2,7 +2,7 @@
 
 <!-- Structure Demo  -->
 <div align="center">
-  <a href="https://github.com/Sholontla/Platform-Science-Code-Exercise-">
+  <a href="https://github.com/Sholontla/PlatformScienceCodeExercise-">
   </a>
 <h3 align="center">Platform Science Code Exercise</h3>
   <p align="center">
@@ -21,7 +21,8 @@
 3.  Use any http client:
     . POST method: - http://localhost:1001/service/run/process/5/second
 
-    - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need for the tests.
+    - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need it for the tests.
+      if you refresh the page every 5 seconds you will see every time different data .
 
 4.  go to:
     localhost:1000
