@@ -15,18 +15,26 @@
   </p>
 </div>
 
-Run the project: 1. Download the repository 2. In the root directory in your local filesystem where the project been downloaded, run the Makefile command "make" to build the project and run the docker contaners. 3. Use any http client:
-. POST method: - http://localhost:1001/service/run/process/5/second
+<!-- RUN THE PROJECT -->
 
-                - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need for the tests.
+## Run Project
 
-    4. go to:
-        localhost:1000
-        And see the data result from the process in the forntEnd.
+1.  Download the repository
 
-    5. go to:
-        localhost:1000/profile
-        Dev Profile.
+2.  In the root directory in your local filesystem where the project been downloaded, run the Makefile command "make" to build the project and run the docker contaners.
+
+3.  Use any http client:
+    . POST method: - http://localhost:1001/service/run/process/5/second
+
+    - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need for the tests.
+
+4.  go to:
+    localhost:1000
+    And see the data result from the process in the forntEnd.
+
+5.  go to:
+    localhost:1000/profile
+    Dev Profile.
 
 This Structure Demo is use for testing and demostration go to for running instructions:
 diagram 1. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(3).jpeg
