@@ -31,7 +31,7 @@
     localhost:1000/profile
     Dev Profile.
 
-This Structure Demo is use for testing and demostration go to for running instructions:
+This Structure Demo is use for testing and demostration go to see few more details in the process with using diagrams:
 diagram 1. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(3).jpeg
 
 diagram 2. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(4).jpeg
