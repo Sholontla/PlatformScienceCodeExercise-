@@ -1,10 +1,13 @@
 package interfaces
 
 import (
+	"context"
 	"file_server/config"
+	"file_server/internal/domain/entity"
 	"file_server/internal/domain/service"
 	"log"
 	"strconv"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -24,6 +27,10 @@ func (c HandlerService) CreateNewDriverNamesHandler(ctx *fiber.Ctx) error {
 }
 
 func (c HandlerService) RunProcessHandler(ctx *fiber.Ctx) error {
+	// Create a context with a timeout of 10 seconds
+	context, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	messageChan := make(chan entity.Message)
 
 	interval := ctx.Params("interval")
 	inte, err := strconv.ParseInt(interval, 10, 16)
@@ -33,6 +40,7 @@ func (c HandlerService) RunProcessHandler(ctx *fiber.Ctx) error {
 
 	frequency := ctx.Params("frequency")
 
-	service.RunProcess(int(inte), frequency, c.c.JSONDriversConfig())
+	go service.RunProcess(int(inte), frequency, c.c.JSONDriversConfig(), messageChan, context)
+	close(messageChan)
 	return ctx.JSON(fiber.Map{"interval_of": inte, "frequency_of": frequency})
 }

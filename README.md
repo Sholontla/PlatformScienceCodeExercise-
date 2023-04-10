@@ -22,7 +22,7 @@
     . POST method: - http://localhost:1001/service/run/process/5/second
 
     - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need it for the tests.
-      if you refresh the page every 5 seconds you will see every time different data but same names just in future improvment create consistent on the names but the Address/Shipment change change with process.
+      if you refresh the page affter 5 sconds you will see new addresses comming from the process as the logic applyed to the data.
 
 4.  go to:
     localhost:1000

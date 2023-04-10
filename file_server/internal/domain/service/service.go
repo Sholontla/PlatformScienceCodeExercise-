@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"file_server/internal/domain/entity"
 	ws "file_server/internal/infrastructure/websocket"
@@ -13,6 +14,7 @@ import (
 	"github.com/brianvoe/gofakeit/v6"
 )
 
+// Dummy data create the array of Drivers to keep consistent with the data.
 func DummyDrivers(n int) ([]string, error) {
 	var names []string
 	// Generate n random addresses and names
@@ -24,10 +26,8 @@ func DummyDrivers(n int) ([]string, error) {
 	return names, nil
 }
 
+// DriverPersitance Function to save the Drivers array into a .JSON file
 func DriverPersitance(n int, driver_demo_path string) {
-	// // Create a context and cancel function
-	// ctx, cancel := context.WithCancel(context.Background())
-	// defer cancel()
 
 	d, err := DummyDrivers(n)
 	if err != nil {
@@ -59,32 +59,47 @@ func DriverPersitance(n int, driver_demo_path string) {
 	fmt.Println("Data saved to drivers_demo.json")
 }
 
-func GetPersitnace(driver_demo_path string) entity.Drivers {
+// GetPersitnace Function to retrevied the Drivers array from a .JSON file
+func GetPersitnace(ctx context.Context, driver_demo_path string) (entity.Drivers, error) {
 	// Open the JSON file
 	file, err := os.Open(driver_demo_path)
 	if err != nil {
-		fmt.Println("Error opening file:", err)
+		return entity.Drivers{}, fmt.Errorf("error opening file %s: %w", driver_demo_path, err)
 	}
-	defer file.Close()
 
+	// Defer a function to close the file, using context to handle cancellation
+	defer func() {
+		if cerr := file.Close(); cerr != nil {
+			log.Printf("Error closing file %s: %v", driver_demo_path, cerr)
+		}
+	}()
 	// Parse the JSON data
 	var drivers entity.Drivers
 
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(&drivers)
 	if err != nil {
-		fmt.Println("Error decoding JSON:", err)
+		// Return an error message with context
+		return entity.Drivers{}, fmt.Errorf("error decoding JSON file %s: %w", driver_demo_path, err)
 	}
 
-	return drivers
+	// Return the drivers entity and a nil error
+	return drivers, nil
 }
 
-func RunProcess(interval int, frequency string, driver_demo_path string) entity.Message {
+// Main Service to functuio to run the service.
+func RunProcess(interval int, frequency string, driver_demo_path string, messageChan chan<- entity.Message, ctx context.Context) {
+	// Create a new context with a timeout of 1 second
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
 
-	var mssg entity.Message
+	driver, err := GetPersitnace(ctx, driver_demo_path)
+	if err != nil {
+		// Return an error message with context
+		log.Printf("Error decoding JSON file %s: %s", driver_demo_path, err)
+	}
 
-	driver := GetPersitnace(driver_demo_path)
-
+	// defind the logic time to execute the service.
 	var ticker *time.Ticker
 
 	switch frequency {
@@ -103,10 +118,14 @@ func RunProcess(interval int, frequency string, driver_demo_path string) entity.
 
 	ws := ws.ClientProducer{}
 
+	// for loop iteration over process
 	for range ticker.C {
 		message := pkg.DummyData(driver.Drivers)
 		log.Println(message)
 		ws.WSFileClient(message)
+
+		// Send the message back to the main program through the message channel
+		messageChan <- entity.Message{Id: message.Id, Driver: message.Driver, Address: message.Address}
 	}
-	return mssg
+
 }
