@@ -88,10 +88,12 @@ func GetPersitnace(ctx context.Context, driver_demo_path string) (entity.Drivers
 }
 
 // Main Service to functuio to run the service.
-func RunProcess(interval int, frequency string, driver_demo_path string, messageChan chan<- entity.Message, ctx context.Context) {
+func RunProcess(interval int, frequency string, driver_demo_path string) entity.Message {
 	// Create a new context with a timeout of 1 second
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
+
+	var mssg entity.Message
 
 	driver, err := GetPersitnace(ctx, driver_demo_path)
 	if err != nil {
@@ -123,9 +125,6 @@ func RunProcess(interval int, frequency string, driver_demo_path string, message
 		message := pkg.DummyData(driver.Drivers)
 		log.Println(message)
 		ws.WSFileClient(message)
-
-		// Send the message back to the main program through the message channel
-		messageChan <- entity.Message{Id: message.Id, Driver: message.Driver, Address: message.Address}
 	}
-
+	return mssg
 }
