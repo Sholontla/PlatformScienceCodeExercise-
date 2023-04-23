@@ -21,9 +21,9 @@
 1.  clone the repository
 
 2.  In the root directory in your local file system where the project been cloned, run the Makefile command "make" to build the project and run the docker containers.
-    \*\*\* Note: This commmand will work in wsl/2 and Linux systems
+    \*\*\* Note: This commmand has been test in wsl/2 and Linux systems
 
-3.           CREATE PUBLISHER/USER:
+3.               CREATE PUBLISHER/USER:
         POST http://localhost:1004/service/access/register/user
         {
         "user_user_name": "user1",
@@ -37,7 +37,7 @@
         "role": true
         }
 
-4.           USER LOGIN:
+4.               USER LOGIN:
         POST http://localhost:1004/service/access/login/user
         body:
         {
@@ -45,7 +45,7 @@
         "password": "user1"
         }
 
-5.            CREATE PUBLISH/ORDER
+5.                CREATE PUBLISH/ORDER
           POST http://localhost:1004/service/create/order
           body:
           {
@@ -63,7 +63,7 @@
           }
           }
 
-6.            VISUALIZE THE DATA
+6.                VISUALIZE THE DATA
           localhost:3000/
 
 <br />
@@ -76,7 +76,6 @@ Project structure by:
 
     - Golang (Go)
     - Fiber (http framework)
-    - gorilla/websocket (sockets)
 
     Virtualization / Containers
 
@@ -90,7 +89,12 @@ Project structure by:
 
     Project OverView:
       * Create topics by http request
-      * kafka Broker to create and send topic throw a service to be consumed by financa_service/.
+      * kafka Broker create and send topic to be consumed by financa_service/
+
+    Security:
+      * have roles/permissions and socpe
+      * JWT
+      *
 
 
     publisher_service have 4 end-point:
@@ -124,7 +128,7 @@ Project structure by:
         }
 
     3.  the endpoint service/create/order will set a topic into the service.
-        The service will have a Kfka Broker service where the finaince_service/ will consume
+        The service will have a Kafka Producer service where the finaince_service/ will consume
         the message from the publisher.
         Benefits of using Kafka Broker:
         - Ensure high concurrency, low concurrency and scalibilty
@@ -147,6 +151,8 @@ Project structure by:
           }
           }
 
+publisher service will save the raw data into MongoDB under users_db for database and users for collection.
+
 <br />
 
 ## Finance Service (finance_service/):
@@ -155,7 +161,6 @@ Project structure by:
 
     - Golang (Go)
     - Fiber (http framework)
-    - gorilla/websocket (sockets)
 
     Virtualization / Containers
 
@@ -168,9 +173,10 @@ Project structure by:
     - Linux
 
 Project OverView:
-. This service use some basic logic to apply "Daily Revenue" for every topic/order consume by Kafka queues and
-rednder the data into a timeline chart using CORS and Next.js as a primary forntEnd framework
-. Also use Redis as Caching system to presist the data from the cosumer side.
+. This service use some basic logic to apply "Daily Revenue" for every topic/order consume by Kafka and
+render the data into a timeline chart using CORS and Next.js as a primary forntEnd framework.
+. Redis as Caching system to presist the data from the cosumer side ans will have a time limite to store data for 1 hour.
+\*\*\*Note: Redis services is only implemented over a high level of configuration and logic, depends on the busniess logic will change.
 
 Post
 http://localhost:1003/finance/:param
@@ -186,13 +192,14 @@ daily_cost
 
 Get
 http://localhost:1003/daily/revenue
-This endpoint list all the data store un Cache redis abd this same endpoint is used in the front End to list all revenue
+This endpoint list all the data store in Cache redis and this same endpoint is used in the front End to list all revenue
 process by the service.
-For the moment only one chart is render into the frontend this only for demo purposes.
 
-The service have implmented the next finance operations:
+For the moment only one chart is render into the frontend this is only for demo purposes.
 
-- CalculateDailyRevenueService (this function is the only working for now)
+The service have implemented the next finance operations and only redner by the frontend is CalculateDailyRevenueService:
+
+- CalculateDailyRevenueService
 - CalculateAverageRevenueService
 - CalculateAverageRevenuePerProductService
 - IdentifyTopSellingProductsService
@@ -215,6 +222,7 @@ The service have implmented the next finance operations:
 ### Built With
 
     - javaScript
+    - TypeScript
     - Next.js
 
     Virtualization / Containers
