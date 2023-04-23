@@ -10,122 +10,227 @@
   </p>
 </div>
 
+<!-- ABOUT THE PROJECT -->
+
+## About the project:
+
 <!-- RUN THE PROJECT -->
 
 ## Run Project
 
-1.  Download the repository
+1.  clone the repository
 
-2.  In the root directory in your local filesystem where the project been downloaded, run the Makefile command "make" to build the project and run the docker contaners.
+2.  In the root directory in your local file system where the project been cloned, run the Makefile command "make" to build the project and run the docker containers.
+    \*\*\* Note: This commmand will work in wsl/2 and Linux systems
 
-3.  Use any http client:
-    . POST method: - http://localhost:1001/service/run/process/5/second
+3.           CREATE PUBLISHER/USER:
+        POST http://localhost:1004/service/access/register/user
+        {
+        "user_user_name": "user1",
+        "user_user_last_name": "user1",
+        "user_user_email": "user1",
+        "password": "user1",
+        "permissions": {
+        "create_topic": true,
+        "read_topic": false
+        },
+        "role": true
+        }
 
-    - common route for file_server: http://localhost:1001/service/run/- the process will run 5 seconds /5/second and can be change by any second/minute/hour/day need it for the tests.
-      if you refresh the page affter 5 sconds you will see new addresses comming from the process as the logic applyed to the data.
+4.           USER LOGIN:
+        POST http://localhost:1004/service/access/login/user
+        body:
+        {
+        "user_user_email": "user1",
+        "password": "user1"
+        }
 
-4.  go to:
-    localhost:1000
-    And see the data result from the process in the forntEnd.
+5.            CREATE PUBLISH/ORDER
+          POST http://localhost:1004/service/create/order
+          body:
+          {
+          "store": {
+          "region": "test1",
+          "sub_region": "test1",
+          "sale": {
+          "product": "test1",
+          "price": 45.25,
+          "cost": 8.25,
+          "unit_sold": 5,
+          "region": "test1",
+          "sub_region": "test1"
+          }
+          }
+          }
 
-5.  go to:
-    localhost:1000/profile
-    Dev Profile.
-
-This Structure Demo is use for testing and demostration go to see few more details in the process with using diagrams:
-diagram 1. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(3).jpeg
-
-diagram 2. https://github.com/Sholontla/PlatformScienceCodeExercise-/blob/master/Diagrama%20en%20blanco%20-%20P%C3%A1gina%201%20(4).jpeg
+6.            VISUALIZE THE DATA
+          localhost:3000/
 
 <br />
-
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
 
 Project structure by:
 
-## File Server Service (file_server/):
+## Publisher Service (publisher_service/):
 
 ### Built With
 
-- Golang (Go)
-- Fiber (http framework)
-- gorilla/websocket (sockets)
+    - Golang (Go)
+    - Fiber (http framework)
+    - gorilla/websocket (sockets)
 
-Virtualization / Containers
+    Virtualization / Containers
 
-- Docker
-- Docker - Compose
+    - Docker
+    - Docker - Compose
 
-O/I
+    O/I
 
-- Windows(WSL2)
-- Linux
+    - Windows(WSL2)
+    - Linux
 
-  PORT: ws/1001
+    Project OverView:
+      * Create topics by http request
+      * kafka Broker to create and send topic throw a service to be consumed by financa_service/.
 
-  Project OverView:
-  . This service is used to created and store the dummy creation and files.
-  . Send the data if needed to throw websocket client and use fleet_service to process some logic business.
-  .
 
-## Fleet Service (fleet_service/):
+    publisher_service have 4 end-point:
 
-### Built With
+    1.  This endpoint register a service/access/register/user
+        \*\*\* Noticed that we have permissions and in this service, the next enpoints will only work with
+        "create_topic": true and "role": true
 
-- Golang (Go)
-- Fiber (http framework)
-- gorilla/websocket (sockets)
+        POST http://localhost:1004/service/access/register/user
+        body:
+        {
+        "user_user_name": "user1",
+        "user_user_last_name": "user1",
+        "user_user_email": "user1",
+        "password": "user1",
+        "permissions": {
+        "create_topic": true,
+        "read_topic": false
+        },
+        "role": true
+        }
 
-Virtualization / Containers
+    2.  This service/access/login/user
+        will Login the publisher/user into the service.
 
-- Docker
-- Docker - Compose
+        POST http://localhost:1004/service/access/login/user
+        body:
+        {
+        "user_user_email": "user1",
+        "password": "user1"
+        }
 
-O/I
-
-- Windows(WSL2)
-- Linux
-  PORT: ws/2001
-
-  Project OverView:
-  . This service manage the "logic Platform Science Code Exercise" described in the "SDE Code Exercise".
-  . The service have one websocket server that handle the incoming data from the client "file_server".
-  . Then, process the data and apply the logic mention before, and sends the data through the websocket client to the analytics service that render the data into html / bootstrap frontEnd.
+    3.  the endpoint service/create/order will set a topic into the service.
+        The service will have a Kfka Broker service where the finaince_service/ will consume
+        the message from the publisher.
+        Benefits of using Kafka Broker:
+        - Ensure high concurrency, low concurrency and scalibilty
+        - If the consumer goes down. we ensure the messages will not be lost.
+        - Amoung others ...
+          POST http://localhost:1004/service/create/order
+          body:
+          {
+          "store": {
+          "region": "test1",
+          "sub_region": "test1",
+          "sale": {
+          "product": "test1",
+          "price": 45.25,
+          "cost": 8.25,
+          "unit_sold": 5,
+          "region": "test1",
+          "sub_region": "test1"
+          }
+          }
+          }
 
 <br />
 
-## Analytics Service (analytics/):
+## Finance Service (finance_service/):
 
 ### Built With
 
-- Python
-- FastAPI (http framework)
-- websockets (sockets)
+    - Golang (Go)
+    - Fiber (http framework)
+    - gorilla/websocket (sockets)
 
-Virtualization / Containers
+    Virtualization / Containers
 
-- Docker
-- Docker - Compose
+    - Docker
+    - Docker - Compose
 
-  PORT: 1000
+    O/I
 
-  Project OverView:
-  . This service manage the front end analytics service rendered the data coming from the the "file_server" and "fleet_service"
+    - Windows(WSL2)
+    - Linux
 
-## About in general the improvements.
+Project OverView:
+. This service use some basic logic to apply "Daily Revenue" for every topic/order consume by Kafka queues and
+rednder the data into a timeline chart using CORS and Next.js as a primary forntEnd framework
+. Also use Redis as Caching system to presist the data from the cosumer side.
 
-This project is the high level implementation.
-many improvments need it.
+Post
+http://localhost:1003/finance/:param
+param:
+revenue
+avarage
+avarage_product
+top_selling
+profit_margin_all
+daily_cost
 
-1. some new frontEnd frameworks (react, vue, etc)
-2. if is robust change all the data analysis to python.
-3. Manage better concurrency, performance and channels.
-4. gandle better context and different concepts to improve performance of servers time responses, wait until server / client send/recieve data.
-5. the file_server can be improve create multiples data dummy producers to multiple fleet_services and combine with improvment number 3 (manage better concurrency) to test performance services and stream, test escability, load balancers monitoring and more.
+    with this parameters listed yo can get some logic apply to the data.
 
-And thanks to the team many other improvements can be implemente.
+Get
+http://localhost:1003/daily/revenue
+This endpoint list all the data store un Cache redis abd this same endpoint is used in the front End to list all revenue
+process by the service.
+For the moment only one chart is render into the frontend this only for demo purposes.
+
+The service have implmented the next finance operations:
+
+- CalculateDailyRevenueService (this function is the only working for now)
+- CalculateAverageRevenueService
+- CalculateAverageRevenuePerProductService
+- IdentifyTopSellingProductsService
+- CalculateAllProfitMarginService
+- CalculateDailyCostService
+- CalculateGrossProfitService
+- CalculateGrossProfitMarginService
+- AnalyzeSalesTrendsService
+- CalculateAverageDailyRevenueService
+- CalculateStoreRevenueService
+- AnalyzeProfitabilityByRegionService
+- IdentifyUnderperformingProductsService
+- AnalyzePricingStrategyService
+- ForecastFutureSales
+
+<br />
+
+## Front End Finance Service (front-end-finance):
+
+### Built With
+
+    - javaScript
+    - Next.js
+
+    Virtualization / Containers
+
+    - Docker
+    - Docker - Compose
+
+    O/I
+
+    - Windows(WSL2)
+    - Linux
+
+Project OverView:
+. This is the front end to render the data and chart comign from the backend.
+
+http://localhost:3000/
 
 <br />
 
@@ -139,6 +244,6 @@ For testing and demostrations purposes.
 
 ## Contact
 
-Gerardo Ruiz Bustani - solbustani@gmail.com - 442 488 6193
+Gerardo Ruiz Bustani - solbustani@gmail.com - +52 442 488 6193
 
 <p align="right">(<a href="#top">back to top</a>)</p>

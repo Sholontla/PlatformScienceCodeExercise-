@@ -1,0 +1,46 @@
+PORT 1004
+
+// METRICS 
+GET http://localhost:1004/metrics
+
+
+POST http://localhost:1004/service/access/register/user
+body:
+{
+	"user_user_name": "user1",
+	"user_user_last_name": "user1",
+	"user_user_email": "user1",
+	"password": "user1",
+	"permissions": {
+		"create_topic": true,
+		"read_topic": true
+	},
+	"role": true
+}
+
+POST http://localhost:1004/service/access/login/user
+body:
+{
+	"user_user_email": "user1",
+	"password": "user1"
+}
+
+POST http://localhost:1004/service/create/order
+body:
+    {
+        "store": {
+          "region": "test1",
+          "sub_region": "test1",
+          "sale": {
+            "product": "test1",
+            "price": 45.25,
+            "cost": 8.25,
+            "unit_sold": 5,
+            "region": "test1",
+            "sub_region": "test1"
+          }
+        }
+      }
+
+
+

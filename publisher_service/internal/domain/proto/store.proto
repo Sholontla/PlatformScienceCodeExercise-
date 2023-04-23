@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package producer;
+
+option go_package = "store_service/internal/domain/proto";
+
+message StoreRequestMessage {
+  string id = 1;
+  string date = 2;
+  string product = 3;
+  float price = 4;
+  float cost = 5;
+  int32 unit_sold = 6;
+  string region = 7;
+  string sub_region = 8;
+}
+
+message StoreResponseMessage {
+  string id = 1;
+  string date = 2;
+  string response = 3;
+}
+
+service StoreService {
+  rpc StreamStore(stream StoreRequestMessage)
+      returns (stream StoreResponseMessage);
+}

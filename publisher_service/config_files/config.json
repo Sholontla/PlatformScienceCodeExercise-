@@ -1,0 +1,34 @@
+{
+    "http_server": 
+        {
+            "port": "1007"
+        },        
+
+    "users_roles_permissions": 
+        {
+            "roles": ["user"],
+            "create_topic": ["create_topic"],
+            "read_topic": ["read_topic"]
+        },
+
+    "mongo_server": 
+        {
+            "data_base": "users_db",
+            "collection": "users",
+            "mongo_url": "mongodb://servicestores:servicestores@servstoresdb:27017/"
+        },
+        
+    "kafka_config": {
+            "bootstrap_servers": "broker:29092",
+            "client_id":         "foo",
+            "acks":              "all",
+            "topic":             "orderMessage"
+        },
+
+    "secret_key": {
+        "key": "9ikNKMPJQ8dNIsDKQ9zaGbjH4Zp5IU0NA=="
+    }
+
+}
+
+

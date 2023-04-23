@@ -1,0 +1,103 @@
+version: '3.9'
+
+services:
+
+  publisher_service_backend:
+    restart: always
+    container_name: publisher_service_container
+    build: .
+    ports:
+      - 1007:1007
+    volumes:
+      - .:/app
+    networks: 
+      - platform_science_code_exercise
+    depends_on:
+      - servstoresdb
+
+  servstoresdb:
+    image: mongo:latest
+    restart: always
+    container_name: mongodborders_container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=servicestores
+      - MONGO_INITDB_ROOT_PASSWORD=servicestores
+    volumes:
+      - ./mongodb:/db/servicestores
+    ports:
+      - "27017:27017"
+    networks: 
+      - platform_science_code_exercise
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "28081:8081"
+    networks: 
+      - platform_science_code_exercise
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=servstoresdb
+      - ME_CONFIG_BASICAUTH_USERNAME=servicestores
+      - ME_CONFIG_BASICAUTH_PASSWORD=servicestores
+      # - ME_CONFIG_MONGODB_AUTH_DATABASE=servicestores
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=servicestores
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=servicestores
+      - ME_CONFIG_MONGODB_URL=mongodb://servicestores:servicestores@servstoresdb:27017/ 
+    depends_on:
+      - servstoresdb
+
+  # traefik:
+  #   image: traefik:v2.4
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #     - "8080:8080"
+  #   command:
+  #     - --api.insecure=true
+  #     - --providers.docker=true
+  #     - --providers.docker.exposedbydefault=false
+  #     - --entrypoints.web.address=:80
+  #     - --entrypoints.websecure.address=:443
+  #     - --certificatesresolvers.default.acme.email=admin@localhost.com
+  #     - --certificatesresolvers.default.acme.storage=/letsencrypt/acme.json
+  #     - --certificatesresolvers.default.acme.httpchallenge.entrypoint=web
+  #   volumes:
+  #     - ./letsencrypt:/letsencrypt
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    hostname: zookeeper
+    container_name: zookeeper
+    networks: 
+      - platform_science_code_exercise
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: broker
+    ports:
+      - "9092:9092"
+    networks: 
+      - platform_science_code_exercise
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+volumes:
+  mongodb_data_volume:
+
+networks:
+  platform_science_code_exercise:
+    name: net_platform_science_code_exercise

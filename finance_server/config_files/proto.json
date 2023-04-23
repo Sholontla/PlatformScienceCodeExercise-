@@ -1,0 +1,3 @@
+{
+    "proto": "protoc -Iinternal/domain/proto --go_out=internal/domain/proto  --go_opt=module=finance_servier/internal/domain/proto  --go-grpc_out=internal/domain/proto  --go-grpc_opt=module=finance_servier/internal/domain/proto internal/domain/proto/store.proto"
+}

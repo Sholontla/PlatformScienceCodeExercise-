@@ -1,6 +1,7 @@
 go 1.19
 
 use (
-	./file_server
-	./fleet_service
+	./finance_server
+	./publisher_service
+	./ws_service
 )

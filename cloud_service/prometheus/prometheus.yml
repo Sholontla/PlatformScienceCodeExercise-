@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 30s # El intervalo en el que se traerá las métricas
+  evaluation_interval: 30s # Evaluará las reglas cada 30 segundos, por defecto es cada minuto
+
+scrape_configs:
+  - job_name: "Prometheus_master"
+    honor_labels: true
+    metrics_path: "/metrics"
+    static_configs:
+      # ------------------------------------- #
+      - targets: ["producer_backend:8004"] # DEV
+        labels:
+          pais: US
+          entorno: DEV
+          cliente: bustani
+          hostname: dev-services
+      # ------------------------------------- #
+      - targets: ["producer_backend:8004"] # QA
+        labels:
+          pais: US
+          entorno: QA
+          cliente: bustani
+          hostname: dev-services
+      # ------------------------------------- #

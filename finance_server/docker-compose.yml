@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+
+  finance_server_backend:
+    restart: always
+    container_name: finance_server_container
+    build: .
+    ports:
+      - 1003:1003
+    volumes:
+      - .:/app
+    depends_on:
+      - cache_service
+      # - postgre_analysis
+    networks: 
+      - platform_science_code_exercise
+  
+  cache_service:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes: 
+      - ./internal/infrastructure/persistance/redis/volumes:/data
+    networks: 
+      - platform_science_code_exercise
+    
+  # postgre_analysis:
+  #   restart: always
+  #   image: postgres:latest
+  #   container_name: postgre_container
+  #   volumes:
+  #     - ./postgres-data:/var/lib/postgresql/data
+  #   ports:
+  #     - 5433:5432
+  #   environment:
+  #     POSTGRES_USER: test
+  #     POSTGRES_PASSWORD: test
+  #     POSTGRES_DB: test 
+  #   networks: 
+  #     - platform_science_code_exercise
+
+
+volumes:
+  cache:
+    driver: local
+    
+networks:
+  platform_science_code_exercise:
+    name: net_platform_science_code_exercise

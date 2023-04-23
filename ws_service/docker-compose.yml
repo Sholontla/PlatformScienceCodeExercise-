@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+
+  ws_service_backend:
+    restart: always
+    container_name: ws_service_container
+    build: .
+    ports:
+      - 1006:1006
+    volumes:
+      - .:/app
+    networks: 
+      - platform_science_code_exercise
+  
+
+volumes:
+  cache:
+    driver: local
+    
+networks:
+  platform_science_code_exercise:
+    name: net_platform_science_code_exercise

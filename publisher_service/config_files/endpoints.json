@@ -1,0 +1,44 @@
+[
+    {
+
+        "endpoints": {
+            "post": "localhost:1004/service/create/order",
+            "get":  "localhost:1004/service/get/all"
+        },
+
+        "order": {
+            "store": {
+                "id": "test1",
+                "region": "test1",
+                "sub_region": "test1",
+                "sale": {
+                    "date": "test1",
+                    "product": "test1",
+                    "price": 0.0,
+                    "cost": 0.0,
+                    "unit_sold": 0,
+                    "region": "test1",
+                    "sub_region": "test1"
+                }
+            }
+        }
+    },
+
+    {
+        "store": {
+          "id": "00000000-0000-0000-0000-000000000000",
+          "region": "test1",
+          "sub_region": "test1",
+          "sale": {
+            "date": "test1",
+            "product": "test1",
+            "price": 0,
+            "cost": 0,
+            "unit_sold": 0,
+            "region": "test1",
+            "sub_region": "test1"
+          }
+        }
+      }
+
+]

@@ -1,0 +1,5 @@
+Post 
+http://localhost:1003/finance/:param
+
+Get
+http://localhost:1003/daily/revenue
